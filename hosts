@@ -1,0 +1,11 @@
+[master]
+#35.154.254.120
+#35.154.106.72
+13.126.154.141
+[nodes]
+#52.66.28.13
+#13.126.96.43
+13.126.147.179
+[all:vars]
+ansible_connection=ssh
+ansible_ssh_user=ubuntu

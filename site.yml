@@ -1,0 +1,21 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+  roles:
+    - common
+
+- hosts: master
+  gather_facts: no
+  roles:
+    - master
+
+- hosts: nodes
+  gather_facts: no
+  roles:
+    - nodes
+
+- hosts: master
+  gather_facts: no
+  roles:
+    - getnodes

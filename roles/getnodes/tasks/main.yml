@@ -1,0 +1,12 @@
+- name: 3 minutes pause
+  pause: 
+    minutes: 3
+    prompt: To continue early> press ctrl+c and then c. To abort a playbook> press ctrl+c and then a.
+
+- name: kubectl get nodes
+  shell: kubectl get nodes
+  register: getnode
+
+- name: check nodes
+  debug:
+    var: getnode.stdout_lines

@@ -1,0 +1,49 @@
+
+- name: kube init
+  shell:
+    kubeadm init | grep "kubeadm join --token"| sed -e 's/^[ \t]*//'
+    #cat hi.txt
+  register: cmd_token
+  become: yes
+
+- block:
+    - name: make .kube
+      file: 
+        path: $HOME/.kube
+        state: directory
+
+    - name: userid
+      command: id -u
+      register: uid
+
+    - name: grid
+      command: id -g
+      register: gid
+
+    #- name: run 2 output commands
+    #  copy: 
+    #    src: /etc/kubernetes/admin.conf
+    #    dest: $HOME/.kube/config
+    #    #owner: "{{ uid.stdout }}"
+    #    #group: "{{ gid.stdout }}"
+    #    remote_src: True
+    - name: 2 output commands
+      shell: sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config && sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+    - name: value of kubeversion
+      shell: kubectl version | base64 | tr -d '\n'
+      register: kubever
+    - name: run pod network
+      shell: 
+        kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=""{{ kubever.stdout }}"
+
+
+
+
+      
+      
+
+
+
+
+

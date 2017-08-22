@@ -1,0 +1,6 @@
+
+- name: run token command
+  shell:
+    #"{{ cmd_token.stdout }}"
+    "{{ hostvars['13.126.154.141']['cmd_token']['stdout'] }}"
+  become: yes

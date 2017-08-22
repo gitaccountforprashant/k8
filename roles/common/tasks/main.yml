@@ -1,0 +1,29 @@
+
+  - name: install apt-transport-https
+    apt:
+      name: apt-transport-https
+      update_cache: yes
+  - name: add key
+    apt_key: 
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+  - name: create file
+    shell:
+      cmd: |
+        cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+        deb http://apt.kubernetes.io/ kubernetes-xenial main
+        EOF
+  - name: aptget update
+    apt:
+      update_cache: yes  
+  - name: install prerequstes
+    apt: 
+      name: "{{ item }}"
+    with_items:
+      - docker.io
+      - kubectl
+      - kubeadm
+      - kubelet
+      - kubernetes-cni
+
+
